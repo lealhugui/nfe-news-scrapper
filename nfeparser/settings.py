@@ -89,3 +89,15 @@ ITEM_PIPELINES = {
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 FEED_EXPORT_ENCODING = 'utf-8'
+
+try:
+    import user_settings
+    MAIL_HOST=user_settings.MAIL_HOST
+    MAIL_PORT=user_settings.MAIL_PORT
+    MAIL_FROM=user_settings.MAIL_FROM
+    MAIL_USER=user_settings.MAIL_USER
+    MAIL_PASS=user_settings.MAIL_PASS
+    MAIL_TLS=True
+    MAIL_TO=user_settings.MAIL_TO
+except:
+    pass

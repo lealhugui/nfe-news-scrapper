@@ -51,8 +51,8 @@ class NfeParserPipeline(object):
 			if len(news):
 				mailer = MailSender.from_settings(self.sts)
 				body = "<h1>Novidades NF-e!</h1><br><div>{body}</div>".format(body="".join(news))
-				send_to = []
-				if len(para) > 0:
+				send_to = self.sts.MAIL_TO
+				if len(send_to) > 0:
 					mailer.send(to=send_to, subject='Novidades NF-e', body=body, mimetype="text/html")
 		except Exception as e:
 			print(e)
