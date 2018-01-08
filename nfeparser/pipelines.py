@@ -12,13 +12,13 @@ from scrapy.mail import MailSender
 
 class NfeParserPipeline(object):
 
-	def __init__(self, db_path, sts):
+	def __init__(self, db_path, settings):
 		self.db_path = db_path
-		self.sts = sts
+		self.settings = settings
 		
 	@classmethod
 	def from_crawler(cls, crawler):
-		return cls(sts=crawler.settings ,db_path=crawler.settings.get('DB_PATH', 'news.db'))
+		return cls(settings=crawler.settings, db_path=crawler.settings.get('DB_PATH', 'news.db'))
 
 	def open_spider(self, spider):
 		self.conn = sqlite3.connect(self.db_path)
@@ -49,11 +49,13 @@ class NfeParserPipeline(object):
 				news.append('<p><a href="{link}">{title}</a></p>'.format(link=item[2], title=item[1]))
 				items_enviados.append(str(item[0]))
 			if len(news):
-				mailer = MailSender.from_settings(self.sts)
+				mailer = MailSender.from_settings(self.settings)
 				body = "<h1>Novidades NF-e!</h1><br><div>{body}</div>".format(body="".join(news))
-				send_to = self.sts.MAIL_TO
+				#TODO: inserir aqui os emails de destino
+				send_to = list()
 				if len(send_to) > 0:
-					mailer.send(to=send_to, subject='Novidades NF-e', body=body, mimetype="text/html")
+					print('mail enviado paraaaaaaaa '+ " ".join(send_to))
+					#mailer.send(to=send_to, subject='Novidades NF-e', body=body, mimetype="text/html")
 		except Exception as e:
 			print(e)
 			pass
