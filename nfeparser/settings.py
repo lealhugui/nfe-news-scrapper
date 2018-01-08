@@ -97,7 +97,7 @@ try:
     MAIL_FROM=user_settings.MAIL_FROM
     MAIL_USER=user_settings.MAIL_USER
     MAIL_PASS=user_settings.MAIL_PASS
-    MAIL_TLS=True
+    MAIL_TLS=user_settings.MAIL_TLS
     MAIL_TO=user_settings.MAIL_TO
 except:
     pass
